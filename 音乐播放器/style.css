@@ -1,0 +1,65 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #fff;
+  color: #eee;
+  background: url('pubilc/bg.png') no-repeat center;
+  /* 黑色，透明度为 50% */
+  background-color: rgba(255, 255, 255, 0.15);
+  /* 混合模式 */
+  background-blend-mode: overlay;
+  background-size: 120%;
+}
+
+.container {
+  margin: 40px auto 0;
+  width: 90%;
+  border: 1px solid #fff;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.container .player {
+  width: 450px;
+  margin: 30px auto;
+}
+
+.container .lrc-container {
+  height: 700px;
+  box-sizing: border-box;
+  padding: 30px;
+  border-bottom: 1px solid #fff;
+}
+
+.container .lrc-wrapper {
+  height: 100%;
+  overflow: hidden;
+}
+
+.container .lrc-wrapper ul {
+  padding-top: 270px;
+  transition: transform 1.5s linear;
+}
+
+.container .lrc-wrapper li {
+  list-style: none;
+  height: 32px;
+  line-height: 32px;
+  font-size: 20px;
+  transition: font-size .2s linear;
+  margin: 2px 0;
+}
+
+.container .lrc-wrapper li.active {
+  color: #fff;
+  font-size: 28px;
+  height: 45px;
+  line-height: 45px;
+  margin: 5px 0;
+  padding: 8px 0;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+}

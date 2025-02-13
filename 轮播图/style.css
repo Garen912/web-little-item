@@ -1,0 +1,107 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+}
+
+body {
+  background-color: #ccc;
+}
+
+.wrapper {
+  width: 720px;
+  height: 412px;
+  margin: 100px auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.wrapper .box {
+  width: 400%;
+  height: 412px;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  transition: left 1s;
+}
+
+.box ul {
+  display: flex;
+}
+
+.box img {
+  width: 720px;
+  height: 412px;
+}
+
+.wrapper .pre {
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  z-index: 99;
+  left: -17px;
+  top: 176px;
+  border: 30px solid rgba(200, 200, 200, 0.4);
+  border-left-color: transparent;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.wrapper .pre:hover {
+  border: 30px solid rgba(200, 200, 200, 1);
+  border-left-color: transparent;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  cursor: pointer;
+}
+
+.wrapper .next {
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  z-index: 99;
+  right: -17px;
+  top: 176px;
+  border: 30px solid rgba(200, 200, 200, 0.4);
+  border-right-color: transparent;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.wrapper .next:hover {
+  border: 30px solid rgba(200, 200, 200, 1);
+  border-right-color: transparent;
+  border-top-color: transparent;
+  border-bottom-color: transparent;
+  cursor: pointer;
+}
+
+.wrapper .dot {
+  z-index: 99;
+  position: absolute;
+  bottom: 45px;
+  left: calc(50% - 75px);
+  width: 150px;
+}
+
+.dot ul {
+  display: flex;
+  justify-content: space-between;
+}
+
+.dot li {
+  width: 17px;
+  height: 17px;
+  background-color: rgba(200, 200, 200, 0.4);
+  border: 2px solid #eee;
+  border-radius: 50%;
+}
+
+.dot li:hover {
+  cursor: pointer;
+  background-color: rgba(200, 200, 200, 1);
+}
+
+.dot .act {
+  background-color: rgba(200, 200, 200, 1);
+}
