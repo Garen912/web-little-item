@@ -119,12 +119,16 @@ const ul = document.querySelector('.lrc-wrapper ul')
 // 设置播放器的音量
 player.volume = 0.1
 
+// 创建文档片段
+const fragment = document.createDocumentFragment()
+
 // 创建歌词列表
 lrcArr.forEach(item => {
   const li = document.createElement('li')
-  li.innerHTML = item.content
-  ul.appendChild(li)
+  li.textContent = item.content
+  fragment.appendChild(li)
 })
+ul.appendChild(fragment)
 
 // 监听播放器的时间更新事件
 player.addEventListener('timeupdate', setOffset)
