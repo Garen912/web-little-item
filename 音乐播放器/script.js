@@ -60,7 +60,7 @@ const setOffset = function () {
   const lrcArr = parseLrc(lrc)
   const currentTime = formatTime(this.currentTime)
   const duration = formatTime(this.duration)
-  const offset = 32 // 歌词的偏移量
+  const offset = 34 // 歌词的偏移量
   const li = document.querySelector('.lrc-wrapper ul li.active')
 
   lrcArr.forEach((item, index) => {
