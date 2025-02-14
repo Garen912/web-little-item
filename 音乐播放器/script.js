@@ -63,26 +63,28 @@ const setOffset = function () {
   const offset = 34 // 歌词的偏移量
   const li = document.querySelector('.lrc-wrapper ul li.active')
 
-  lrcArr.forEach((item, index) => {
-    const nextTime = lrcArr[index + 1] ? lrcArr[index + 1].time : duration
-    // 确定当前播放时间在哪一句歌词的时间范围内
-    if (currentTime >= item.time && currentTime < nextTime) {
-      // 歌词滚动
-      ul.style.transform = `translateY(-${(index) * offset}px)`
-      if (li) {
-        // 取消上一句歌词的高亮
-        li.classList.remove('active')
-      }
-      // 高亮当前歌词
-      document.querySelector(`.lrc-wrapper ul li:nth-child(${index + 1})`).classList.add('active')
-    } else if (currentTime < lrcArr[0].time) {
-      // 重置歌词位置
-      ul.style.transform = `translateY(0px)`
-      if (li) {
-        li.classList.remove('active')
-      }
+  // 当前时间小于第一句歌词的时间时，重置歌词位置
+  if (currentTime < lrcArr[0].time) {
+    ul.style.transform = `translateY(0px)`
+    if (li) {
+      li.classList.remove('active')
     }
-  })
+  } else {
+    // 查找当前时间对应的歌词
+    const lrcIndex = lrcArr.findIndex((item, index) => {
+      const nextTime = lrcArr[index + 1] ? lrcArr[index + 1].time : duration
+      return currentTime >= item.time && currentTime < nextTime
+    })
+
+    // 歌词滚动
+    ul.style.transform = `translateY(-${(lrcIndex) * offset}px)`
+    if (li) {
+      // 取消上一句歌词的高亮
+      li.classList.remove('active')
+    }
+    // 高亮当前歌词
+    document.querySelector(`.lrc-wrapper ul li:nth-child(${lrcIndex + 1})`).classList.add('active')
+  }
 }
 
 /**
