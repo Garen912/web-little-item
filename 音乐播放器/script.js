@@ -46,53 +46,34 @@ const lrc = `[00:15.000]...
  * @param {number} time 时间
  * @returns {string} 格式化后的时间
  */
-let formatTime = function (time) {
+const formatTime = function (time) {
   const minutes = Math.floor(time / 60)
   const seconds = Math.floor(time % 60)
   const milliseconds = Math.floor(time % 1 * 1000)
   return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}.${String(milliseconds).padStart(3, '0')}`
 }
 
-// 解析歌词
-const lrcArr = lrc.split('\n').map(item => {
-  const regex = /^\[(\d{2}:\d{2}\.\d{3})\](.*)$/
-  const match = item.match(regex)
-
-  if (match) {
-    const time = match[1]
-    const content = match[2]
-
-    const li = document.createElement('li')
-    li.innerHTML = content
-    document.querySelector('.lrc-wrapper ul').appendChild(li)
-
-    return {
-      time,
-      content
-    }
-  }
-})
-
-const player = document.querySelector('.player')
-const ul = document.querySelector('.lrc-wrapper ul')
-
-player.volume = 0.1
-
-// 监听播放器的时间更新事件
-player.addEventListener('timeupdate', function () {
+/**
+ * 设置歌词的偏移量
+ */
+const setOffset = function () {
+  const lrcArr = parseLrc(lrc)
   const currentTime = formatTime(this.currentTime)
   const duration = formatTime(this.duration)
-  const offset = 32 // 每行歌词的高度
+  const offset = 32 // 歌词的偏移量
   const li = document.querySelector('.lrc-wrapper ul li.active')
 
   lrcArr.forEach((item, index) => {
     const nextTime = lrcArr[index + 1] ? lrcArr[index + 1].time : duration
+    // 确定当前播放时间在哪一句歌词的时间范围内
     if (currentTime >= item.time && currentTime < nextTime) {
       // 歌词滚动
       ul.style.transform = `translateY(-${(index) * offset}px)`
       if (li) {
+        // 取消上一句歌词的高亮
         li.classList.remove('active')
       }
+      // 高亮当前歌词
       document.querySelector(`.lrc-wrapper ul li:nth-child(${index + 1})`).classList.add('active')
     } else if (currentTime < lrcArr[0].time) {
       // 重置歌词位置
@@ -102,4 +83,46 @@ player.addEventListener('timeupdate', function () {
       }
     }
   })
+}
+
+/**
+ * 解析歌词
+ * @param {*} lrc 歌词字符串
+ * @returns {Array} 解析后的歌词数组
+ */
+const parseLrc = function (lrc) {
+  const lrcArr = lrc.split('\n').map(item => {
+    // 匹配时间和歌词内容
+    const regex = /^\[(\d{2}:\d{2}\.\d{3})\](.*)$/
+    const match = item.match(regex)
+
+    if (match) {
+      const time = match[1]
+      const content = match[2]
+
+      return {
+        time,
+        content
+      }
+    }
+  })
+
+  return lrcArr
+}
+
+const lrcArr = parseLrc(lrc)
+const player = document.querySelector('.player')
+const ul = document.querySelector('.lrc-wrapper ul')
+
+// 设置播放器的音量
+player.volume = 0.1
+
+// 创建歌词列表
+lrcArr.forEach(item => {
+  const li = document.createElement('li')
+  li.innerHTML = item.content
+  ul.appendChild(li)
 })
+
+// 监听播放器的时间更新事件
+player.addEventListener('timeupdate', setOffset)
