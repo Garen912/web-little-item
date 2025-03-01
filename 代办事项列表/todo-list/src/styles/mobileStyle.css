@@ -1,0 +1,20 @@
+/* 移动端适配 */
+@media (max-width: 768px) {
+
+  /* /src/view/TodoList.vue */
+  .todo-container {
+    font-size: 0.8rem;
+    height: 100vh;
+    min-width: 0 !important;
+    position: relative;
+  }
+
+  /* /src/component/ListItem.vue */
+  .todo-container .todo-main .list-item .pagination {
+    overflow-x: auto;
+  }
+
+  .todo-container .todo-main .list-item ul {
+    height: calc(100vh - 162px);
+  }
+}
